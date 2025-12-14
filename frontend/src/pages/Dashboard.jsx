@@ -10,6 +10,7 @@ import {
   Alert,
   Pagination,
   Box,
+  CircularProgress,
 } from "@mui/material";
 import api from "../api/api";
 
@@ -19,12 +20,15 @@ export default function Dashboard() {
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const LIMIT = 5;
 
   const fetchData = async (pageNumber = 1) => {
     try {
       setError("");
+      setLoading(true);
+      setData(null);
 
       const res = await api.get(
         `/dashboard?month=${month}&ngoId=${ngoId}&page=${pageNumber}&limit=${LIMIT}`
@@ -33,7 +37,9 @@ export default function Dashboard() {
       setData(res.data);
       setPage(pageNumber);
     } catch (err) {
-      setError("Failed to load dashboard data. Please login again.", err);
+      setError("Failed to load dashboard data. Please login again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -43,7 +49,6 @@ export default function Dashboard() {
         Admin Dashboard
       </Typography>
 
-      {/* Filters */}
       <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
         <TextField
           label="Month (YYYY-MM)"
@@ -60,21 +65,38 @@ export default function Dashboard() {
         <Button
           variant="contained"
           onClick={() => fetchData(1)}
-          disabled={!month}
+          disabled={!month || loading}
         >
           Load
         </Button>
       </Box>
 
-      {/* Error */}
       {error && (
         <Alert severity="error" sx={{ mt: 2 }}>
           {error}
         </Alert>
       )}
 
-      {/* Summary Cards */}
-      {data?.summary && (
+      {loading && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            mt: 6,
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      )}
+
+      {!loading && data && (!data.data || data.data.length === 0) && (
+        <Alert severity="info" sx={{ mt: 3 }}>
+          No data found for the selected month. Please check the month or
+          filters.
+        </Alert>
+      )}
+
+      {!loading && data?.summary && (
         <Grid container spacing={2} sx={{ mt: 3 }}>
           <Grid item xs={12} sm={6} md={3}>
             <Card>
@@ -122,7 +144,7 @@ export default function Dashboard() {
         </Grid>
       )}
 
-      {data?.data?.length > 0 && (
+      {!loading && data?.data?.length > 0 && (
         <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
           <Pagination
             page={page}
