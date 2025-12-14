@@ -28,6 +28,8 @@ export default function SubmitReport() {
       fundsUtilized: Number(form.fundsUtilized),
     });
     alert("Report submitted");
+
+    setForm([]);
   };
 
   return (
