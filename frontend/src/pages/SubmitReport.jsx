@@ -2,14 +2,15 @@ import { useState } from "react";
 import { Container, TextField, Button, Typography } from "@mui/material";
 import api from "../api/api";
 
+const initialFormState = {
+  ngoId: "",
+  month: "",
+  peopleHelped: "",
+  eventsConducted: "",
+  fundsUtilized: "",
+};
 export default function SubmitReport() {
-  const [form, setForm] = useState({
-    ngoId: "",
-    month: "",
-    peopleHelped: "",
-    eventsConducted: "",
-    fundsUtilized: "",
-  });
+  const [form, setForm] = useState(initialFormState);
 
   const handleChange = (e) => {
     setForm({
@@ -29,7 +30,7 @@ export default function SubmitReport() {
     });
     alert("Report submitted");
 
-    setForm([]);
+    setForm(initialFormState);
   };
 
   return (

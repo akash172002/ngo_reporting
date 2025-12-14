@@ -57,6 +57,11 @@ The system is designed to handle **large volumes of data**, **partial failures**
 - Docker
 - MongoDB (local or Atlas)
 
+### Admin credentials
+
+- Email admin@admin.com
+- Pass admin1
+
 ---
 
 ### Backend Setup
