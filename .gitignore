@@ -34,7 +34,7 @@ frontend/.env.*
 # ========================
 backend/node_modules/
 backend/.env
-backend/.env.*
+
 
 # ========================
 # Logs
