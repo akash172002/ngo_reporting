@@ -59,13 +59,6 @@ The system is designed to handle **large volumes of data**, **partial failures**
 
 ---
 
-### Admin Login Credential
-
-- at the end of frontened url go to /login for login
-  -email - admin@ngo.com
-
--password - admin123
-
 ### Backend Setup
 
 ```bash
