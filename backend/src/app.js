@@ -7,6 +7,7 @@ import errorHandler from "./middlewares/error.middleware.js";
 import jobStatusRoutes from "./routes/jobStatus.routes.js";
 import cors from "cors";
 import { metricsMiddleware } from "./middlewares/metrics.middleware.js";
+
 const app = express();
 app.use(metricsMiddleware);
 
