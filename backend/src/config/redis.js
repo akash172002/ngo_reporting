@@ -1,10 +1,6 @@
 import IORedis from "ioredis";
 
-const redis = new IORedis({
-  host: process.env.REDIS_HOST || "127.0.0.1",
-  port: process.env.REDIS_PORT || 6379,
-  maxRetriesPerRequest: null,
-});
+const redis = new IORedis(process.env.REDIS_URL);
 
 redis.on("connect", () => console.log("Redis connected"));
 
